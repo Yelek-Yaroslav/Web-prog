@@ -1,0 +1,52 @@
+.container {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    margin: 50px auto;
+    background-color: #e5e5e5;
+}
+
+.block {
+    position: absolute;
+    border: 2px solid #000000;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 15px;
+    color: #000000;
+}
+
+.top-block {
+    width: 100px;
+    height: 80px;
+    background-color: #438f63;
+    top: 30px;
+    left: 240px;
+    z-index: 1;
+}
+
+.left-block {
+    width: 125px;
+    height: 100px;
+    background-color: #7b5947;
+    top: 180px;
+    left: 60px;
+    z-index: 1;
+}
+
+.right-block {
+    width: 75px;
+    height: 120px;
+    background-color: #8c213f;
+    top: 160px;
+    left: 420px;
+    z-index: 1;
+}
+
+.center-block {
+    width: 170px;
+    height: 150px;
+    background-color: #a6d83a;
+    top: 140px;
+    left: 220px;
+    z-index: 1; 
+}

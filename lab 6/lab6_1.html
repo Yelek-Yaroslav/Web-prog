@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Максимальне число</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { margin-top: 15px; font-size: 18px; }
+        .highlight { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h2>Результат виконання скрипта:</h2>
+    <div id="output" class="result"></div>
+
+    <script  type="text/javascript">
+        function runScript() {
+            let numbers = [];
+            let count = 5;
+
+            // Цикл для отримання 5 чисел
+            for (let i = 1; i <= count; i++) {
+                let input;
+                let isValid = false;
+
+                // Запитуємо введення, поки не отримаємо коректне число
+                while (!isValid) {
+                    input = prompt(`Введіть число ${i} з ${count}:`, "");
+                    
+                    // Обробка натискання кнопки "Скасувати"
+                    if (input === null) {
+                        let cancel = confirm("Ви дійсно хочете скасувати введення?");
+                        if (cancel) {
+                            document.getElementById("output").innerHTML = "Роботу скрипта скасовано користувачем.";
+                            return;
+                        } else {
+                            continue;
+                        }
+                    }
+
+                    // Конвертація у число з плаваючою крапкою та перевірка на NaN
+                    let num = parseFloat(input);
+                    if (isNaN(num)) {
+                        alert("Помилка! Введене значення не є числом. Спробуйте ще раз.");
+                    } else {
+                        numbers.push(num);
+                        isValid = true;
+                    }
+                }
+            }
+
+            // Формування HTML для виведення на вебсторінку
+            let htmlOutput = "<b>Введені числа:</b><br>";
+            
+            // Виведення чисел у стовпчик
+            for (let i = 0; i < numbers.length; i++) {
+                htmlOutput += numbers[i] + "<br>";
+            }
+
+            // Пошук максимального числа
+            let maxNumber = Math.max(...numbers);
+
+            htmlOutput += `<br><span class="highlight">Максимальне число: ${maxNumber}</span>`;
+
+            // Виведення результату у блок div
+            document.getElementById("output").innerHTML = htmlOutput;
+        }
+        runScript();
+    </script>
+
+</body>
+</html>

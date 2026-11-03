@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблиця товарів</title>
+    <style>
+        table {
+            width: 80%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #999;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #62af64;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .total-row {
+            font-weight: bold;
+            background-color: #c8e6c9;
+        }
+        .text-right {
+            text-align: right;
+            padding-right: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align: center; font-family: Arial, sans-serif;">Інформація про товари</h2>
+
+    <script>
+        // Ініціалізація масиву об'єктів з даними про 5 товарів
+        const products = [
+            { code: "A-001", name: "Ноутбук", price: 24500, quantity: 2 },
+            { code: "F-042", name: "Миша комп'ютерна", price: 800, quantity: 5 },
+            { code: "F-123", name: "Клавіатура", price: 1500, quantity: 3 },
+            { code: "D-054", name: "Монітор 24\"", price: 6200, quantity: 4 },
+            { code: "F-066", name: "Килимок для миші", price: 350, quantity: 10 }
+        ];
+
+        let grandTotal = 0;
+
+        document.write('<table>');
+        document.write('<tr><th>Код</th><th>Найменування</th><th>Ціна за одиницю, грн</th><th>Кількість, шт</th><th>Сума, грн</th></tr>');
+
+        // Цикл для перебору масиву та формування рядків таблиці
+        for (let i = 0; i < products.length; i++) {
+            let productTotal = products[i].price * products[i].quantity;
+            
+            grandTotal += productTotal;
+
+            // Виведення даних у рядок таблиці
+            document.write('<tr>');
+            document.write('<td>' + products[i].code + '</td>');
+            document.write('<td>' + products[i].name + '</td>');
+            document.write('<td>' + products[i].price + '</td>');
+            document.write('<td>' + products[i].quantity + '</td>');
+            document.write('<td>' + productTotal + '</td>');
+            document.write('</tr>');
+        }
+
+        // Виведення розрахункового поля "Всього" із загальною сумою
+        document.write('<tr class="total-row">');
+        document.write('<td colspan="4" class="text-right">Всього:</td>');
+        document.write('<td>' + grandTotal + '</td>');
+        document.write('</tr>');
+        
+        document.write('</table>');
+    </script>
+
+</body>
+</html>

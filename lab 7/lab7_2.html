@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Завдання 3 - Фібоначчі</title>
+</head>
+<body>
+  <h1>Завдання 3: Фібоначчі - рекурсія та мемоїзація</h1>
+  <pre id="output"></pre>
+
+  <script>
+    let numberOfRecusrionCalls = 0;
+    let numberOfMemoCalls = 0;
+
+    function fibonachiRecursion(numberInRow) {
+      numberOfRecusrionCalls++;
+
+      if (numberInRow <= 1) {
+        return 1;
+      }
+
+      return fibonachiRecursion(numberInRow - 1) + fibonachiRecursion(numberInRow - 2);
+    }
+
+    function createFibonachiMemo() {
+      const cache = {};
+
+      return function fibonachiMemo(numberInRow) {
+        numberOfMemoCalls++;
+
+        if (numberInRow <= 1) {
+          return 1;
+        }
+
+        if (cache[numberInRow] !== undefined) {
+          return cache[numberInRow];
+        }
+
+        cache[numberInRow] = fibonachiMemo(numberInRow - 1) + fibonachiMemo(numberInRow - 2);
+        return cache[numberInRow];
+      };
+    }
+
+    const fibonachiMemo = createFibonachiMemo();
+
+    const result1 = fibonachiRecursion(5);
+    const result2 = fibonachiMemo(5);
+
+    console.log(result1, numberOfRecusrionCalls);
+    console.log(result2, numberOfMemoCalls);
+
+    document.getElementById("output").textContent =
+      `Рекурсія:   результат = ${result1}, кількість викликів = ${numberOfRecusrionCalls}\n` +
+      `Мемоїзація: результат = ${result2}, кількість викликів = ${numberOfMemoCalls}\n\n`;
+  </script>
+</body>
+</html>

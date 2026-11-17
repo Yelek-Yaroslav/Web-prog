@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Завдання 1 - сума або різниця</title>
+</head>
+<body>
+  <h1>Завдання 1: Сума або різниця</h1>
+  <pre id="output"></pre>
+
+  <script>
+    function sumOrMinus(...args) {
+      if (args.length % 2 === 0) {
+        return args.reduce((sum, n) => sum + n, 0);
+      }
+      let result = args[args.length - 1];
+      for (let i = args.length - 2; i >= 0; i--) {
+        result -= args[i];
+      }
+      return result;
+    }
+
+    const tests = [
+      { args: [1, 2, 3], expected: 0 },
+      { args: [2, 5, 8, 4], expected: 19 },
+      { args: [8, 1, 2], expected: -7 },
+    ];
+
+    const lines = tests.map(({ args, expected }) => {
+      const actual = sumOrMinus(...args);
+      const ok = actual === expected ? "OK" : "ПОМИЛКА";
+      return `sumOrMinus(${args.join(", ")}) = ${actual} (очікувано ${expected}) - ${ok}`;
+    });
+
+    console.log(lines.join("\n"));
+    document.getElementById("output").textContent = lines.join("\n");
+  </script>
+</body>
+</html>

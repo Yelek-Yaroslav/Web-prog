@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторна робота №8 - Таби на JavaScript (DOM API)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f1f5f9;
+            color: #1e293b;
+            padding: 40px 20px;
+        }
+
+        .tabs-container {
+            max-width: 820px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.1);
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
+        }
+
+        .tabs-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .tabs-table td {
+            text-align: center;
+            padding: 15px 10px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            background-color: #e2e8f0;
+            color: #475569;
+            border-right: 1px solid #cbd5e1;
+            border-bottom: 2px solid #cbd5e1;
+            transition: background-color 0.2s, color 0.2s;
+            user-select: none;
+        }
+
+        .tabs-table td:last-child {
+            border-right: none;
+        }
+
+        .tabs-table td:hover {
+            background-color: #cbd5e1;
+        }
+
+        #tab-content {
+            padding: 28px;
+            min-height: 240px;
+            background-color: #ffffff;
+        }
+
+        .content-layout {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .tab-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .tab-text h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #0f172a;
+        }
+
+        .tab-text p {
+            line-height: 1.6;
+            margin-bottom: 12px;
+            color: #334155;
+        }
+
+        .tab-text ul {
+            padding-left: 20px;
+            line-height: 1.6;
+            color: #334155;
+        }
+
+        .tab-text li {
+            margin-bottom: 4px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 999px;
+            background-color: #e0f2fe;
+            color: #0369a1;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        const tabsData = {
+            1: {
+                accent: '#e34f26',
+                html: `
+                    <div class="content-layout">
+                        <img class="tab-image" src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect width="140" height="140" fill="%23e34f26"/><text x="70" y="80" font-family="Arial,sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle">HTML5</text></svg>' alt="HTML5">
+                        <div class="tab-text">
+                            <span class="badge">Структура документа</span>
+                            <h2>HTML5 - мова розмітки</h2>
+                            <p><strong>HTML5</strong> визначає каркас веб-сторінки та структурує контент за допомогою семантичних тегів.</p>
+                            <ul>
+                                <li>Семантичні блоки: <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;footer&gt;</code>.</li>
+                                <li>Вбудована підтримка аудіо, відео та графіки <code>&lt;canvas&gt;</code>.</li>
+                                <li>Розширені типи полів для веб-форм.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            2: {
+                accent: '#264de4',
+                html: `
+                    <div class="content-layout">
+                        <img class="tab-image" src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect width="140" height="140" fill="%23264de4"/><text x="70" y="80" font-family="Arial,sans-serif" font-size="34" font-weight="bold" fill="white" text-anchor="middle">CSS3</text></svg>' alt="CSS3">
+                        <div class="tab-text">
+                            <span class="badge">Оформлення та стилі</span>
+                            <h2>CSS3 - каскадні таблиці стилів</h2>
+                            <p><strong>CSS3</strong> відповідає за візуальне представлення елементів, адаптивність та анімації інтерфейсу.</p>
+                            <ul>
+                                <li>Гнучке позиціонування за допомогою <strong>Flexbox</strong> та <strong>CSS Grid</strong>.</li>
+                                <li>Адаптивна верстка через медіа-запити (<code>@media</code>).</li>
+                                <li>Плавні переходи (<code>transition</code>) та трансформації.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            3: {
+                accent: '#d97706',
+                html: `
+                    <div class="content-layout">
+                        <img class="tab-image" src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect width="140" height="140" fill="%23f59e0b"/><text x="70" y="82" font-family="Arial,sans-serif" font-size="42" font-weight="bold" fill="%231e293b" text-anchor="middle">JS</text></svg>' alt="JavaScript">
+                        <div class="tab-text">
+                            <span class="badge">Інтерактивність</span>
+                            <h2>JavaScript - логіка на стороні клієнта</h2>
+                            <p><strong>JavaScript</strong> робить веб-сторінку динамічною, дозволяючи реагувати на дії користувача без перезавантаження.</p>
+                            <ul>
+                                <li>Обробка подій: кліки, введення тексту, наведення курсора.</li>
+                                <li>Асинхронні запити до серверів через <code>fetch()</code>.</li>
+                                <li>Валідація форм та динамічна зміна інтерфейсу.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            4: {
+                accent: '#059669',
+                html: `
+                    <div class="content-layout">
+                        <img class="tab-image" src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect width="140" height="140" fill="%23059669"/><text x="70" y="80" font-family="Arial,sans-serif" font-size="34" font-weight="bold" fill="white" text-anchor="middle">DOM</text></svg>' alt="DOM API">
+                        <div class="tab-text">
+                            <span class="badge">Об'єктна модель</span>
+                            <h2>DOM API - робота з деревом елементів</h2>
+                            <p><strong>Document Object Model</strong> представляє HTML-документ у вигляді дерева вузлів, доступних для зміни з JavaScript.</p>
+                            <ul>
+                                <li>Пошук елементів: <code>getElementById()</code>, <code>querySelector()</code>.</li>
+                                <li>Зміна вмісту через властивості <code>innerHTML</code> та <code>textContent</code>.</li>
+                                <li>Керування стилями через об'єкт <code>element.style</code>.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            5: {
+                accent: '#7c3aed',
+                html: `
+                    <div class="content-layout">
+                        <img class="tab-image" src='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140"><rect width="140" height="140" fill="%237c3aed"/><text x="70" y="80" font-family="Arial,sans-serif" font-size="26" font-weight="bold" fill="white" text-anchor="middle">DevTools</text></svg>' alt="DevTools">
+                        <div class="tab-text">
+                            <span class="badge">Налагодження</span>
+                            <h2>Browser DevTools - інструменти розробника</h2>
+                            <p>Вбудовані інструменти браузера допомагають тестувати верстку, відстежувати помилки скриптів та аналізувати продуктивність.</p>
+                            <ul>
+                                <li><strong>Elements</strong> - інспектування DOM-дерева та CSS у реальному часі.</li>
+                                <li><strong>Console</strong> - перегляд логів, помилок та виконання JS-коду.</li>
+                                <li><strong>Network</strong> - аналіз HTTP-запитів та швидкості завантаження.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function info_for_tab(tabNumber) {
+            for (let i = 1; i <= 5; i++) {
+                const tab = document.getElementById('tab' + i);
+                tab.style.backgroundColor = '';
+                tab.style.color = '#475569';
+                tab.style.borderBottom = '2px solid #cbd5e1';
+            }
+
+            const activeTab = document.getElementById('tab' + tabNumber);
+            const selectedData = tabsData[tabNumber];
+
+            activeTab.style.backgroundColor = '#ffffff';
+            activeTab.style.color = selectedData.accent;
+            activeTab.style.borderBottom = '3px solid ' + selectedData.accent;
+
+            const contentBlock = document.getElementById('tab-content');
+            contentBlock.innerHTML = selectedData.html;
+        }
+
+        window.onload = function () {
+            info_for_tab(1);
+        };
+    </script>
+</head>
+<body>
+
+    <div class="tabs-container">
+        <table class="tabs-table">
+            <tr>
+                <td id="tab1" onclick="info_for_tab(1)">HTML5</td>
+                <td id="tab2" onclick="info_for_tab(2)">CSS3</td>
+                <td id="tab3" onclick="info_for_tab(3)">JavaScript</td>
+                <td id="tab4" onclick="info_for_tab(4)">DOM API</td>
+                <td id="tab5" onclick="info_for_tab(5)">DevTools</td>
+            </tr>
+        </table>
+
+        <div id="tab-content"></div>
+    </div>
+
+</body>
+</html>

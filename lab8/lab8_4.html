@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма підбору будинку</title>
+    <style>
+        body {
+            background-color: #92a8c2;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 30px 15px;
+            margin: 0;
+            color: #333;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 500px;
+            padding: 30px 45px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            padding: 3px 6px;
+            border: 1px solid #888;
+            border-radius: 2px;
+            font-size: 13px;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid #2c3e50;
+            margin: 15px 0;
+        }
+
+        .radio-group {
+            margin-left: 15px;
+            margin-top: 5px;
+        }
+
+        .radio-group label {
+            display: block;
+            margin-bottom: 4px;
+            cursor: pointer;
+        }
+
+        .price-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .textarea-group {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        textarea {
+            flex: 1;
+            height: 45px;
+            border: 1px solid #888;
+            border-radius: 2px;
+            resize: vertical;
+            font-family: Arial, sans-serif;
+            padding: 4px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 6px;
+        }
+
+        button {
+            background-color: #3b4b5e;
+            color: #ffffff;
+            border: none;
+            padding: 10px 22px;
+            font-size: 13px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2c3e50;
+        }
+
+        .error {
+            color: #d93025;
+            font-size: 12px;
+            display: block;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h1>Форма підбору будинку</h1>
+
+    <form name="houseForm" onsubmit="return validateHouseForm()" onreset="clearErrors()">
+        <div class="form-group">
+            <label>Прізвище: <input type="text" name="surname" size="25"></label>
+            <span id="surnamef" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Ім'я: <input type="text" name="name" size="25"></label>
+            <span id="namef" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Email: <input type="text" name="email" placeholder="yourmail@gmail.com" size="25"></label>
+            <span id="emailf" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Номер телефону: <input type="text" name="phone" placeholder="+380501234567" size="25"></label>
+            <span id="phonef" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Адреса: <input type="text" name="address" size="25"></label>
+            <span id="addressf" class="error"></span>
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+            Оберіть тип житла:
+            <div class="radio-group">
+                <label><input type="radio" name="houseType" value="Квартира"> Квартира</label>
+                <label><input type="radio" name="houseType" value="Таунхаус"> Таунхаус</label>
+                <label><input type="radio" name="houseType" value="Будинок"> Будинок</label>
+            </div>
+            <span id="typef" class="error"></span>
+        </div>
+
+        <div class="form-group" style="margin-top: 12px;">
+            <label>Оберіть кількість кімнат:
+                <select name="rooms">
+                    <option value="1">Однокімнатні</option>
+                    <option value="2">Двокімнатні</option>
+                    <option value="3">Трикімнатні</option>
+                    <option value="4+">Чотирикімнатні та більше</option>
+                </select>
+            </label>
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+            Оберіть бажану ціну:
+            <div class="price-container">
+                <input type="range" name="price" min="500" max="10000" step="100" value="3500" oninput="updatePrice(this.value)">
+                <span id="priceValue">3500$</span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+            <label>Є домашні тварини <input type="checkbox" name="pets"></label>
+        </div>
+
+        <div class="form-group textarea-group">
+            <label for="wishes">Додаткові побажання:</label>
+            <textarea id="wishes" name="wishes"></textarea>
+        </div>
+
+        <div class="buttons">
+            <button type="submit">Відправити</button>
+            <button type="reset">Скасувати</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Оновлення значення ціни біля повзунка
+    function updatePrice(val) {
+        document.getElementById('priceValue').textContent = val + '$';
+    }
+
+    // Очищення помилок при натисканні "Скасувати"
+    function clearErrors() {
+        const errorIds = ['surnamef', 'namef', 'emailf', 'phonef', 'addressf', 'typef'];
+        errorIds.forEach(id => document.getElementById(id).innerHTML = '');
+        updatePrice(3500);
+    }
+
+    // Валідація полів форми
+    function validateHouseForm() {
+        let isValid = true;
+        const errorIds = ['surnamef', 'namef', 'emailf', 'phonef', 'addressf', 'typef'];
+        errorIds.forEach(id => document.getElementById(id).innerHTML = '');
+
+        const form = document.forms['houseForm'];
+        const surname = form['surname'].value.trim();
+        const name = form['name'].value.trim();
+        const email = form['email'].value.trim();
+        const phone = form['phone'].value.trim();
+        const address = form['address'].value.trim();
+        const houseType = form['houseType'].value;
+
+        if (surname.length === 0) {
+            document.getElementById('surnamef').innerHTML = '*дане поле обов’язкове для заповнення';
+            isValid = false;
+        }
+
+        if (name.length === 0) {
+            document.getElementById('namef').innerHTML = '*дане поле обов’язкове для заповнення';
+            isValid = false;
+        }
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailRegex.test(email)) {
+            document.getElementById('emailf').innerHTML = '*email введено невірно';
+            isValid = false;
+        }
+
+        const phoneRegex = /^\+380\d{9}$/;
+        if (!phoneRegex.test(phone)) {
+            document.getElementById('phonef').innerHTML = '*формат має бути +380501234567';
+            isValid = false;
+        }
+
+        if (address.length === 0) {
+            document.getElementById('addressf').innerHTML = '*дане поле обов’язкове для заповнення';
+            isValid = false;
+        }
+
+        if (!houseType) {
+            document.getElementById('typef').innerHTML = '*оберіть тип житла';
+            isValid = false;
+        }
+
+        if (isValid) {
+            alert('Форму успішно відправлено!');
+        }
+
+        return isValid;
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Канцтовари</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7f7;
+      color: #2c3e50;
+    }
+
+    header {
+      background-color: #2f8f91;
+      color: #ffffff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      letter-spacing: 0.5px;
+    }
+
+    nav.menu {
+      background-color: #247173;
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      padding: 12px 20px;
+    }
+
+    nav.menu a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+
+    nav.menu a:hover {
+      opacity: 0.8;
+    }
+
+    .slider-section {
+      width: 100%;
+      background-color: #ffffff;
+      padding: 28px 20px 32px;
+      border-bottom: 1px solid #e0e6e6;
+    }
+
+    .slider-wrapper {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .slider-viewport {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .slider-track {
+      --visible: 3;
+      --gap: 16px;
+      display: flex;
+      gap: var(--gap);
+      transition: transform 0.4s ease;
+    }
+
+    .slide {
+      flex: 0 0 calc((100% - (var(--visible) - 1) * var(--gap)) / var(--visible));
+      background-color: #42b8ba;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      color: #ffffff;
+      user-select: none;
+    }
+
+    .slide-image {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+      background-color: #36a0a2;
+    }
+
+    .slide-caption {
+      padding: 16px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide-caption h3 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .slider-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      border: none;
+      background-color: #cccccc;
+      cursor: pointer;
+      transition: background-color 0.25s, transform 0.25s;
+    }
+
+    .dot.active {
+      background-color: #7d8b8c;
+      transform: scale(1.15);
+    }
+
+    .slider-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .slider-btn {
+      background-color: #c8c8c8;
+      color: #ffffff;
+      border: none;
+      border-radius: 20px;
+      padding: 7px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .slider-btn:hover {
+      background-color: #9e9e9e;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .slider-track {
+        --visible: 2;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .slider-track {
+        --visible: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Магазин канцтоварів «Штрих»</h1>
+  </header>
+
+  <nav class="menu">
+    <a href="#">Головна</a>
+    <a href="#">Каталог</a>
+    <a href="#">Акції</a>
+    <a href="#">Контакти</a>
+  </nav>
+
+  <section class="slider-section" aria-label="Слайдер канцтоварів">
+    <div class="slider-wrapper">
+      <div class="slider-viewport">
+        <div class="slider-track" id="sliderTrack">
+
+          <article class="slide">
+            <img class="slide-image" src="notebooks.jpg" alt="Блокноти та щоденники">
+            <div class="slide-caption">
+              <h3>Блокноти та щоденники</h3>
+            </div>
+          </article>
+
+          <article class="slide">
+            <img class="slide-image" src="pens.jpg" alt="Ручки та маркери">
+            <div class="slide-caption">
+              <h3>Ручки та маркери</h3>
+            </div>
+          </article>
+
+          <article class="slide">
+            <img class="slide-image" src="pencils.jpg" alt="Олівці та креслення">
+            <div class="slide-caption">
+              <h3>Олівці та креслення</h3>
+            </div>
+          </article>
+
+          <article class="slide">
+            <img class="slide-image" src="organizers.jpg" alt="Настільні органайзери">
+            <div class="slide-caption">
+              <h3>Настільні органайзери</h3>
+            </div>
+          </article>
+
+          <article class="slide">
+            <img class="slide-image" src="paper.jpg" alt="Папір та папки">
+            <div class="slide-caption">
+              <h3>Папір та папки</h3>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <div class="slider-controls">
+        <div class="slider-dots" id="sliderDots"></div>
+        <div class="slider-buttons">
+          <button type="button" class="slider-btn" id="prevBtn">prev</button>
+          <button type="button" class="slider-btn" id="nextBtn">next</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <h2>Основний контент сторінки</h2>
+  </main>
+
+  <script>
+    const track = document.getElementById('sliderTrack');
+    const slides = Array.from(track.children);
+    const dotsContainer = document.getElementById('sliderDots');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let currentIndex = 0;
+
+    function getVisibleCount() {
+      if (window.innerWidth <= 600) return 1;
+      if (window.innerWidth <= 900) return 2;
+      return 3;
+    }
+
+    function getMaxIndex() {
+      return Math.max(0, slides.length - getVisibleCount());
+    }
+
+    function renderDots() {
+      dotsContainer.innerHTML = '';
+      const totalPositions = getMaxIndex() + 1;
+
+      for (let i = 0; i < totalPositions; i++) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'dot' + (i === currentIndex ? ' active' : '');
+        dot.setAttribute('aria-label', `Слайд ${i + 1}`);
+        dot.addEventListener('click', () => {
+          currentIndex = i;
+          updateSlider();
+        });
+        dotsContainer.appendChild(dot);
+      }
+    }
+
+    function updateSlider() {
+      const maxIndex = getMaxIndex();
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+      const slideWidth = slides[0].getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      const offset = currentIndex * (slideWidth + gap);
+
+      track.style.transform = `translateX(-${offset}px)`;
+
+      const dots = dotsContainer.querySelectorAll('.dot');
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    prevBtn.addEventListener('click', () => {
+      const maxIndex = getMaxIndex();
+      currentIndex = currentIndex > 0 ? currentIndex - 1 : maxIndex;
+      updateSlider();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      const maxIndex = getMaxIndex();
+      currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
+      updateSlider();
+    });
+
+    window.addEventListener('resize', () => {
+      const maxIndex = getMaxIndex();
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+      renderDots();
+      updateSlider();
+    });
+
+    renderDots();
+    updateSlider();
+  </script>
+
+</body>
+</html>

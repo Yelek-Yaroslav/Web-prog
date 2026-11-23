@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Валідація даних</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 40px;
+      flex-wrap: wrap;
+    }
+    form {
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 320px;
+    }
+    h3 {
+      margin-top: 0;
+      color: #2c3e50;
+      text-align: center;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    label {
+      display: block;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #2e86de;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #1b6dc1;
+    }
+  </style>
+</head>
+<body>
+
+  <form onsubmit="return validateLoginForm()">
+    <h3>Вхід у «Світ Канцтоварів»</h3>
+    <input type="text" id="login-email" placeholder="Ваш Email">
+    <input type="password" id="login-password" placeholder="Пароль">
+    <button type="submit">Увійти</button>
+  </form>
+
+  <form onsubmit="return validateRegisterForm()">
+    <h3>Реєстрація покупця</h3>
+    <input type="text" id="reg-name" placeholder="Ім'я та прізвище">
+    <input type="text" id="reg-email" placeholder="Email">
+    <input type="text" id="reg-phone" placeholder="+380501234567">
+    <input type="password" id="reg-password" placeholder="Пароль (від 6 символів)">
+    <input type="password" id="reg-confirm-password" placeholder="Підтвердіть пароль">
+    <label>
+      <input type="checkbox" id="reg-terms"> Погоджуюсь з правилами магазину
+    </label>
+    <button type="submit">Зареєструватися</button>
+  </form>
+
+  <script>
+    function validateLoginForm() {
+      let email = document.getElementById("login-email").value.trim();
+      let password = document.getElementById("login-password").value;
+
+      let emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+      if (email === "") {
+        alert("Будь ласка, введіть ваш Email для входу в магазин канцтоварів.");
+        return false;
+      }
+
+      if (!email.match(emailRegex)) {
+        alert("Введено некоректну адресу електронної пошти.");
+        return false;
+      }
+
+      if (password === "") {
+        alert("Будь ласка, введіть пароль.");
+        return false;
+      }
+
+      if (password.length < 6) {
+        alert("Пароль має містити щонайменше 6 символів.");
+        return false;
+      }
+
+      alert("Авторизація успішна! Ласкаво просимо до магазину канцтоварів.");
+      return true;
+    }
+
+    function validateRegisterForm() {
+      let fullName = document.getElementById("reg-name").value.trim();
+      let email = document.getElementById("reg-email").value.trim();
+      let phone = document.getElementById("reg-phone").value.trim();
+      let password = document.getElementById("reg-password").value;
+      let confirmPassword = document.getElementById("reg-confirm-password").value;
+      let agreeTerms = document.getElementById("reg-terms").checked;
+
+      let emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      let phoneRegex = /^\+380\d{9}$/;
+
+      if (fullName === "") {
+        alert("Введіть ваше ім'я та прізвище для оформлення замовлень.");
+        return false;
+      }
+
+      if (email === "") {
+        alert("Поле Email обов'язкове для заповнення.");
+        return false;
+      }
+
+      if (!email.match(emailRegex)) {
+        alert("Будь ласка, введіть коректний Email (наприклад, user@gmail.com).");
+        return false;
+      }
+
+      if (phone === "") {
+        alert("Введіть номер телефону для зв'язку щодо доставки канцтоварів.");
+        return false;
+      }
+
+      if (!phone.match(phoneRegex)) {
+        alert("Введіть номер телефону у форматі +380XXXXXXXXX.");
+        return false;
+      }
+
+      if (password === "") {
+        alert("Придумайте пароль для вашого акаунту.");
+        return false;
+      }
+
+      if (password.length < 6) {
+        alert("Пароль повинен містити не менше 6 символів.");
+        return false;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Паролі не співпадають. Перевірте правильність введення.");
+        return false;
+      }
+
+      if (!agreeTerms) {
+        alert("Для завершення реєстрації погодьтеся з умовами використання сайту.");
+        return false;
+      }
+
+      alert("Реєстрація успішна! Тепер ви можете замовляти канцтовари зі знижкою.");
+      return true;
+    }
+  </script>
+
+</body>
+</html>

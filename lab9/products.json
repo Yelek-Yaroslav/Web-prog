@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Ручка гелева Pilot G-2 (синя)",
+        "category": "writing",
+        "price": 115,
+        "amount": 10,
+        "image": "images_pen.jpg"
+    },
+    {
+        "name": "Набір маркерів Stabilo (4 шт.)",
+        "category": "writing",
+        "price": 240,
+        "amount": 5,
+        "image": "images_markers.jpg"
+    },
+    {
+        "name": "Олівець механічний Rotring 0.5 мм",
+        "category": "writing",
+        "price": 390,
+        "amount": 4,
+        "image": "images_pencil.jpg"
+    },
+    {
+        "name": "Зошит А5 у клітинку (96 арк.)",
+        "category": "paper",
+        "price": 65,
+        "amount": 12,
+        "image": "images_notebook.jpg"
+    },
+    {
+        "name": "Блокнот Moleskine Classic",
+        "category": "paper",
+        "price": 780,
+        "amount": 3,
+        "image": "images_moleskine.jpg"
+    },
+    {
+        "name": "Папір офісний А4 (500 арк.)",
+        "category": "paper",
+        "price": 260,
+        "amount": 6,
+        "image": "images_paper.jpg"
+    }
+]

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин канцтоварів «Штрих»</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-top">
+            <h1>Магазин канцтоварів «Штрих»</h1>
+        </div>
+        <nav class="navbar">
+            <div class="container nav-inner">
+                <ul class="nav-links">
+                    <li><a href="#">Головна</a></li>
+                    <li><a href="#" class="active">Каталог</a></li>
+                    <li><a href="#">Акції</a></li>
+                    <li><a href="#">Контакти</a></li>
+                </ul>
+                <div class="basket-counter">
+                    Кошик: <span id="basket-count">0</span> шт.
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container layout">
+        <section class="catalog">
+            <div class="catalog-top">
+                <h2>Каталог товарів</h2>
+                <div class="filters" id="category-filters">
+                    <button class="filter-btn active" data-category="all">Усі</button>
+                    <button class="filter-btn" data-category="writing">Письмове</button>
+                    <button class="filter-btn" data-category="paper">Папір</button>
+                </div>
+            </div>
+            <div id="products-grid" class="products-grid"></div>
+        </section>
+
+        <aside class="basket-panel">
+            <div class="basket-header">
+                <h2>Кошик</h2>
+                <span class="basket-total" id="basket-total">0 грн</span>
+            </div>
+            <div id="basket-list" class="basket-list"></div>
+        </aside>
+    </main>
+
+    <script src="store.js"></script>
+</body>
+</html>
